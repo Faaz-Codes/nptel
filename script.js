@@ -116,6 +116,9 @@
     clearTimer();
 
     state.mode = mode;
+    if (window.App) {
+      window.App.mode = mode;
+    }
     state.questions = [];
     state.currentIndex = 0;
     state.correct = 0;
@@ -132,13 +135,15 @@
     }
 
     if (mode === 'exam') {
-      state.questions = buildExamQuestionSet(state.pool, 50);
+      const examQuestionCount = state.selectedWeek === null ? 50 : state.pool.length;
+      state.questions = buildExamQuestionSet(state.pool, examQuestionCount);
       state.remainingSeconds = 3 * 60 * 60;
       startTimer();
       els.timerDisplay.style.display = 'flex';
       els.endBtn.style.display = 'none';
       els.quizModeBadge.textContent = 'EXAM';
       els.btnNext.textContent = 'Next →';
+      els.btnNext.style.display = 'none';
     } else {
       state.questions = [];
       state.remainingSeconds = 0;
@@ -146,6 +151,7 @@
       els.endBtn.style.display = 'inline-flex';
       els.quizModeBadge.textContent = 'ENDLESS';
       els.btnNext.textContent = 'Next →';
+      els.btnNext.style.display = 'none';
     }
 
     state.lastQuizConfig = {
@@ -154,7 +160,6 @@
     };
 
     els.quizWeekLabel.textContent = state.selectedLabel;
-    els.btnNext.style.display = 'none';
     showScreen('quiz');
     renderCurrentQuestion();
   }
@@ -259,12 +264,24 @@
       }
     });
 
-    els.btnNext.style.display = 'inline-flex';
-
-    if (state.mode === 'exam' && state.currentIndex === state.questions.length - 1) {
-      els.btnNext.textContent = 'Finish →';
-    } else if (state.mode === 'endless') {
-      els.btnNext.textContent = 'Next →';
+    if (window.App.mode === 'exam') {
+      els.btnNext.style.display = 'inline-flex';
+      if (state.currentIndex === state.questions.length - 1) {
+        els.btnNext.textContent = 'Finish →';
+      } else {
+        els.btnNext.textContent = 'Next →';
+      }
+    } else if (window.App.mode === 'endless') {
+      const answeredQuestion = state.currentQuestion;
+      window.setTimeout(function () {
+        if (
+          window.App.mode === 'endless'
+          && state.answered
+          && state.currentQuestion === answeredQuestion
+        ) {
+          nextQuestion();
+        }
+      }, 1500);
     }
   }
 
@@ -471,6 +488,7 @@
   }
 
   window.App = {
+    mode: null,
     goAllWeeks,
     goWeekByWeek,
     goHome,
