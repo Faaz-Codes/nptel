@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Quiz Portal — NPTEL HCI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<canvas id="bg-canvas"></canvas>
+
+<!-- HOME SCREEN -->
+<div id="screen-home" class="screen active">
+  <div class="home-content">
+    <div class="logo-badge">NPTEL · HCI</div>
+    <h1 class="home-title">Quiz<br/><span class="accent">Portal</span></h1>
+    <p class="home-sub">Test your Human-Computer Interaction knowledge across 12 weeks of course material.</p>
+    <div class="home-buttons">
+      <button class="btn-primary" onclick="App.goAllWeeks()">
+        <span class="btn-icon">◈</span>
+        All Weeks Together
+        <span class="btn-arrow">→</span>
+      </button>
+      <button class="btn-secondary" onclick="App.goWeekByWeek()">
+        <span class="btn-icon">◉</span>
+        Week by Week
+        <span class="btn-arrow">→</span>
+      </button>
+    </div>
+    <div class="last-score-display" id="last-score-display"></div>
+  </div>
+  <div class="home-deco">
+    <div class="deco-ring ring-1"></div>
+    <div class="deco-ring ring-2"></div>
+    <div class="deco-ring ring-3"></div>
+  </div>
+</div>
+
+<!-- WEEK SELECTOR -->
+<div id="screen-week-select" class="screen">
+  <div class="inner-card">
+    <button class="back-btn" onclick="App.goHome()">← Back</button>
+    <h2 class="card-title">Select a Week</h2>
+    <p class="card-sub">Choose which week's material you want to practice.</p>
+    <div class="week-grid" id="week-grid"></div>
+  </div>
+</div>
+
+<!-- MODE SELECT -->
+<div id="screen-mode-select" class="screen">
+  <div class="inner-card">
+    <button class="back-btn" id="mode-back-btn">← Back</button>
+    <div class="mode-label" id="mode-label">All Weeks</div>
+    <h2 class="card-title">Choose Mode</h2>
+    <p class="card-sub">How would you like to practice?</p>
+    <div class="mode-cards">
+      <div class="mode-card" onclick="App.startExam()">
+        <div class="mode-icon">⏱</div>
+        <h3>Exam Demo</h3>
+        <p>50 random questions · 3 hour timer · Graded result</p>
+        <span class="mode-tag">Timed</span>
+      </div>
+      <div class="mode-card" onclick="App.startEndless()">
+        <div class="mode-icon">∞</div>
+        <h3>Endless Mode</h3>
+        <p>Unlimited questions · No timer · End when you want</p>
+        <span class="mode-tag">Relaxed</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- QUIZ SCREEN -->
+<div id="screen-quiz" class="screen">
+  <div class="quiz-header">
+    <div class="quiz-meta">
+      <span id="quiz-mode-badge" class="mode-badge">EXAM</span>
+      <span id="quiz-week-label" class="week-label">All Weeks</span>
+    </div>
+    <div id="timer-display" class="timer-display">
+      <span class="timer-icon">◷</span>
+      <span id="timer-text">3:00:00</span>
+    </div>
+    <button class="end-btn" id="end-btn" onclick="App.endQuiz()">End Quiz</button>
+  </div>
+
+  <div class="quiz-body">
+    <div class="progress-bar-wrap">
+      <div class="progress-bar" id="progress-bar"></div>
+    </div>
+    <div class="q-counter" id="q-counter">Question 1</div>
+
+    <div class="question-card" id="question-card">
+      <p class="question-text" id="question-text">Loading...</p>
+      <div class="options-list" id="options-list"></div>
+    </div>
+
+    <button class="btn-next" id="btn-next" onclick="App.nextQuestion()" style="display:none">
+      Next →
+    </button>
+  </div>
+</div>
+
+<!-- RESULT SCREEN -->
+<div id="screen-result" class="screen">
+  <div class="result-card">
+    <div class="result-icon" id="result-icon">🎉</div>
+    <h2 class="result-title" id="result-title">Quiz Complete!</h2>
+    <div class="result-stats">
+      <div class="stat-box">
+        <span class="stat-val" id="stat-total">0</span>
+        <span class="stat-label">Total</span>
+      </div>
+      <div class="stat-box correct">
+        <span class="stat-val" id="stat-correct">0</span>
+        <span class="stat-label">Correct</span>
+      </div>
+      <div class="stat-box wrong">
+        <span class="stat-val" id="stat-wrong">0</span>
+        <span class="stat-label">Wrong</span>
+      </div>
+      <div class="stat-box score">
+        <span class="stat-val" id="stat-score">0%</span>
+        <span class="stat-label">Score</span>
+      </div>
+    </div>
+    <div class="score-bar-wrap">
+      <div class="score-bar" id="score-bar"></div>
+    </div>
+    <p class="score-message" id="score-message"></p>
+    <div class="result-actions">
+      <button class="btn-primary" onclick="App.restart()">↺ Play Again</button>
+      <button class="btn-secondary" onclick="App.goHome()">⌂ Home</button>
+    </div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
