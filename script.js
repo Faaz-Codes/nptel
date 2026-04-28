@@ -322,6 +322,7 @@
       }
     } else if (window.App.mode === 'endless') {
       const answeredQuestion = state.currentQuestion;
+      const delayMs = isCorrect ? 200 : 1800;
       window.setTimeout(function () {
         if (
           window.App.mode === 'endless'
@@ -330,7 +331,7 @@
         ) {
           nextQuestion();
         }
-      }, 1500);
+      }, delayMs);
     }
   }
 
