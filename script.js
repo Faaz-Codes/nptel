@@ -15,6 +15,9 @@
     remainingSeconds: 0,
     currentQuestion: null,
     lastQuizConfig: null,
+    endlessPool: [],
+    endlessIndex: 0,
+    endlessCycleComplete: false,
   };
 
   const els = {};
@@ -125,6 +128,9 @@
     state.wrong = 0;
     state.answered = false;
     state.currentQuestion = null;
+    state.endlessPool = [];
+    state.endlessIndex = 0;
+    state.endlessCycleComplete = false;
 
     if (!state.pool.length) {
       state.pool = (state.selectedWeek === null ? quizData.all : quizData.weeks[state.selectedWeek] || []).slice();
@@ -146,6 +152,9 @@
       els.btnNext.style.display = 'none';
     } else {
       state.questions = [];
+      state.endlessPool = shuffle(state.pool.slice());
+      state.endlessIndex = 0;
+      state.endlessCycleComplete = false;
       state.remainingSeconds = 0;
       els.timerDisplay.style.display = 'none';
       els.endBtn.style.display = 'inline-flex';
@@ -235,8 +244,48 @@
   }
 
   function getRandomEndlessQuestion() {
+    if (state.endlessIndex < state.endlessPool.length) {
+      const nextQuestionFromCycle = state.endlessPool[state.endlessIndex];
+      state.endlessIndex += 1;
+      return cloneQuestionWithShuffledOptions(nextQuestionFromCycle);
+    }
+
+    if (!state.endlessCycleComplete) {
+      showCompletionToast();
+      state.endlessCycleComplete = true;
+    }
+
     const idx = Math.floor(Math.random() * state.pool.length);
     return cloneQuestionWithShuffledOptions(state.pool[idx]);
+  }
+
+  function showCompletionToast() {
+    const toast = document.createElement('div');
+    toast.innerText = 'All questions have been practiced';
+
+    toast.style.position = 'fixed';
+    toast.style.right = '20px';
+    toast.style.top = '20px';
+    toast.style.padding = '12px 18px';
+    toast.style.background = 'rgba(0,0,0,0.85)';
+    toast.style.color = '#00e676';
+    toast.style.border = '1px solid rgba(0,230,118,0.4)';
+    toast.style.borderRadius = '12px';
+    toast.style.fontSize = '13px';
+    toast.style.zIndex = '9999';
+    toast.style.opacity = '0';
+    toast.style.transition = 'opacity 0.3s ease';
+
+    document.body.appendChild(toast);
+
+    requestAnimationFrame(() => {
+      toast.style.opacity = '1';
+    });
+
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      setTimeout(() => toast.remove(), 300);
+    }, 3000);
   }
 
   function handleAnswer(selectedButton, selectedLetter) {
