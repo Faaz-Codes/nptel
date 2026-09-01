@@ -65,12 +65,13 @@ html, body {
 /* ===== HOME SCREEN ===== */
 #screen-home {
   flex-direction: column;
+  overflow-y: auto;
 }
 .home-content {
   position: relative;
   z-index: 2;
   text-align: center;
-  max-width: 520px;
+  max-width: 960px;
   padding: 40px 24px;
 }
 .logo-badge {
@@ -104,11 +105,106 @@ html, body {
   max-width: 380px;
   margin: 0 auto 40px;
 }
-.home-buttons {
+.subject-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  text-align: left;
+}
+.subject-card {
   display: flex;
+  min-height: 270px;
   flex-direction: column;
-  gap: 14px;
-  align-items: center;
+  align-items: flex-start;
+  padding: 28px;
+  color: var(--text);
+  text-decoration: none;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  backdrop-filter: blur(12px);
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+.subject-card:hover,
+.subject-card:focus-visible {
+  background: var(--surface-hover);
+  border-color: var(--accent);
+  box-shadow: 0 12px 40px var(--glow);
+  outline: none;
+  transform: translateY(-4px);
+}
+.subject-card-icon {
+  margin-bottom: 22px;
+  color: var(--accent);
+  font-size: 28px;
+}
+.subject-card h2 {
+  font-size: clamp(21px, 2.5vw, 28px);
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+.subject-card p {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.65;
+}
+.subject-card-link {
+  margin-top: auto;
+  padding-top: 24px;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.subject-card-link span {
+  display: inline-block;
+  margin-left: 4px;
+  transition: transform 0.2s ease;
+}
+.subject-card:hover .subject-card-link span,
+.subject-card:focus-visible .subject-card-link span { transform: translateX(4px); }
+@media (max-width: 640px) {
+  .subject-grid { grid-template-columns: 1fr; }
+  .subject-card { min-height: 220px; }
+}
+
+/* ===== SUBJECT PAGES ===== */
+.subject-page {
+  min-height: 100%;
+  overflow: auto;
+}
+.subject-content {
+  width: min(100% - 32px, 760px);
+  margin: 0 auto;
+  padding: 64px 0;
+}
+.subject-back { display: inline-block; }
+.subject-title {
+  max-width: 720px;
+  font-size: clamp(42px, 8vw, 72px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-bottom: 20px;
+}
+.accent { color: var(--accent); }
+.subject-description {
+  max-width: 620px;
+  color: var(--text-muted);
+  font-size: 17px;
+  line-height: 1.65;
+  margin-bottom: 34px;
+}
+.subject-panel {
+  padding: 28px;
+  background: rgba(10,16,28,0.85);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.subject-panel h2 { font-size: 22px; margin-bottom: 10px; }
+.subject-panel p { color: var(--text-muted); font-size: 14px; line-height: 1.6; }
 }
 
 /* ===== BUTTONS ===== */
