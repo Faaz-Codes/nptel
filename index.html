@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Quiz Portal — NPTEL HCI</title>
+<title>Choose Your Subject — NPTEL</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -15,22 +15,23 @@
 <!-- HOME SCREEN -->
 <div id="screen-home" class="screen active">
   <div class="home-content">
-    <div class="logo-badge">NPTEL · HCI</div>
-    <h1 class="home-title">Quiz<br/><span class="accent">Portal</span></h1>
-    <p class="home-sub">Test your Human-Computer Interaction knowledge across 12 weeks of course material.</p>
-    <div class="home-buttons">
-      <button class="btn-primary" onclick="App.goAllWeeks()">
-        <span class="btn-icon">◈</span>
-        All Weeks Together
-        <span class="btn-arrow">→</span>
-      </button>
-      <button class="btn-secondary" onclick="App.goWeekByWeek()">
-        <span class="btn-icon">◉</span>
-        Week by Week
-        <span class="btn-arrow">→</span>
-      </button>
+    <div class="logo-badge">NPTEL</div>
+    <h1 class="home-title">Choose Your<br/><span class="accent">Subject</span></h1>
+    <p class="home-sub">Select a subject to begin exploring its learning materials.</p>
+    <div class="subject-grid" aria-label="Available subjects">
+      <a class="subject-card" href="public-speaking.html">
+        <span class="subject-card-icon" aria-hidden="true">◈</span>
+        <h2>Public Speaking</h2>
+        <p>Develop your communication, presentation, confidence, and public speaking skills.</p>
+        <span class="subject-card-link">Explore <span aria-hidden="true">→</span></span>
+      </a>
+      <a class="subject-card" href="psychology-stress-health-wellbeing.html">
+        <span class="subject-card-icon" aria-hidden="true">◎</span>
+        <h2>Psychology of Stress, Health and Wellbeing</h2>
+        <p>Explore stress, health, wellbeing, and psychological approaches to understanding and managing them.</p>
+        <span class="subject-card-link">Explore <span aria-hidden="true">→</span></span>
+      </a>
     </div>
-    <div class="last-score-display" id="last-score-display"></div>
   </div>
   <div class="home-deco">
     <div class="deco-ring ring-1"></div>

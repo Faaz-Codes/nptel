@@ -496,6 +496,10 @@
   }
 
   function renderLastScore() {
+    if (!els.lastScoreDisplay) {
+      return;
+    }
+
     const raw = localStorage.getItem('nptel_hci_last_score');
     if (!raw) {
       els.lastScoreDisplay.textContent = '';
